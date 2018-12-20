@@ -12,11 +12,9 @@ For information on OpenSCAD:
 For additional help with 3D Printing, I found these links useful:
 
 <a href="https://www.matterhackers.com/articles/how-to-succeed-when-printing-in-pla">
-https://www.matterhackers.com/articles/how-to-succeed-when-printing-in-pla</a>
-
-and
-
+https://www.matterhackers.com/articles/how-to-succeed-when-printing-in-pla</a><br>
+<br>and<br>
 <a href="https://www.matterhackers.com/articles/how-to-succeed-when-printing-with-abs">
-https://www.matterhackers.com/articles/how-to-succeed-when-printing-with-abs</a>
+https://www.matterhackers.com/articles/how-to-succeed-when-printing-with-abs</a><br>
 
 
