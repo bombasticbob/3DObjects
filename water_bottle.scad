@@ -15,12 +15,12 @@ function anti_scaler(n) = (n / 0.254) / 1.02;
 // 1/8" pitch, 370 degrees, inside height btwn 3/8" and 13/32"
 // thread diameter 1/32" (approximately)
 
-$to=scaler(187.5)/2;   // 1.12" outer diameter on threaded part
+$to=scaler(191)/2;   // just above 1 7/8" inside cap diameter
 $ww=scaler(100/32);  // wall width, 1/32"
-$ch=scaler(300/8);   // 3/8" bottle cap height
+$ch=scaler(700/16);  // 7/16" bottle cap height
 $tp=scaler(100/8);   // thread pitch 1/8"
-$tb=scaler(300/32);  // 3/32" gap from top
-$td=scaler(100/34); // thread diameter
+$tb=scaler(900/64);  // 3/32" gap from top
+$td=scaler(100/32); // thread diameter
 $dy=0.1; // delta Y for loops
 
 // accuracy parameters
@@ -40,8 +40,8 @@ $fn=48; // number of faces in shape
           linear_extrude(height=$ch)
             circle($to+$ww, center=true);
 
-        translate([0,0,$ww-1]) // position of bottle cap ring
-          linear_extrude(height=$ch+2)
+        translate([0,0,$ww]) // position of bottle cap ring
+          linear_extrude(height=$ch+1)
             circle($to, center=true);
       };
 
@@ -53,7 +53,8 @@ $fn=48; // number of faces in shape
            translate([cos(i3)*$to,sin(i3)*$to,$ww+$ch - $tb - $td - $tp*i3/360]) //$ph+scaler(10)+$ww+$ch])
             rotate(a=[90,-90,i3])
               linear_extrude(height=$ww*2, center=true)
-                 circle($td, center=true);
+                 //circle($td, center=true);
+                 polygon(points=[[-$td,0], [$td,0], [0,1.5*$td]] , $center=true);
          }
 
   };
