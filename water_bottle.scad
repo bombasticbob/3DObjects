@@ -20,7 +20,7 @@ $ww=scaler(100/32);  // wall width, 1/32"
 $ch=scaler(700/16);  // 7/16" bottle cap height
 $tp=scaler(100/8);   // thread pitch 1/8"
 $tb=scaler(900/64);  // 3/32" gap from top
-$td=scaler(100/32); // thread diameter
+$td=scaler(100/24); // thread depth
 $dy=0.1; // delta Y for loops
 
 // accuracy parameters
@@ -54,7 +54,7 @@ $fn=48; // number of faces in shape
             rotate(a=[90,-90,i3])
               linear_extrude(height=$ww*2, center=true)
                  //circle($td, center=true);
-                 polygon(points=[[-$td,0], [$td,0], [0,1.5*$td]] , $center=true);
+                 polygon(points=[[-$td,scaler(1)], [$td,-scaler(1)], [0,1.5*$td]] , $center=true);
          }
 
   };
