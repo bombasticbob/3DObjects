@@ -15,16 +15,16 @@ function anti_scaler(n) = (n / 0.254) / 1.02;
 // 1/8" pitch, 370 degrees, inside height btwn 3/8" and 13/32"
 // thread diameter 1/32" (approximately)
 
-$to=scaler(191)/2;   // just above 1 7/8" inside cap diameter
+$to=scaler(195)/2;   // just above 1 7/8" inside cap diameter
 $ww=scaler(100/32);  // wall width, 1/32"
 $ch=scaler(700/16);  // 7/16" bottle cap height
 $tp=scaler(100/8);   // thread pitch 1/8"
-$tb=scaler(900/64);  // 3/32" gap from top
-$td=scaler(100/24); // thread depth
+$tb=scaler(300/32);  // 3/32" gap from top
+$td=scaler(100/16); // thread depth 1/16"
 $dy=0.1; // delta Y for loops
 
 // accuracy parameters
-$fn=48; // number of faces in shape
+$fn=60; // number of faces in shape
 
   union()
   {
@@ -48,9 +48,9 @@ $fn=48; // number of faces in shape
     // threads on bottle cap - a bit hackish but it works
 
     color("yellow")
-         for(i3=[0:3:370])
+         for(i3=[0:3:440])
          {
-           translate([cos(i3)*$to,sin(i3)*$to,$ww+$ch - $tb - $td - $tp*i3/360]) //$ph+scaler(10)+$ww+$ch])
+           translate([cos(i3)*$to,sin(i3)*$to,$ww+$ch - $tb - $td - ($tp*440/360) + ($tp*i3/360)]) //$ph+scaler(10)+$ww+$ch])
             rotate(a=[90,-90,i3])
               linear_extrude(height=$ww*2, center=true)
                  //circle($td, center=true);
