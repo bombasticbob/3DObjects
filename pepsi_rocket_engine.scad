@@ -90,6 +90,8 @@
 // NOTE:  make sure fins are not damaged by over-torquing the cap and attempting to remove
 //        it again by bracing against the fins for increased torque.
 //
+// NOTE 2:  1/32" threads are too thin; the cap was blown off at ~100psi.
+//
 //
 // ACTUAL MEASUREMENTS
 // ------ ------------
@@ -123,6 +125,7 @@ $ww=scaler(100/16);  // wall width, 1/16"
 $ch=scaler(45);      // 0.45" bottle cap height
 $bh=scaler(10);      // band 'collar' height 0.1"
 $tp=scaler(12.5);    // thread pitch 0.125"
+$tr=scaler(5);       // thread radius, 1/20"
 $tb=scaler(36);      // thread start (offset from bottom)
 
 // TODO:  shorter collar, 'golf ball' divets within the neck ?
@@ -177,7 +180,7 @@ translate([0,0,$ch+$ph+scaler(10)+$ww-1])
              translate([cos(i3)*$to,sin(i3)*$to,$ph+$bh+$ww+$ch-1 - $tb + $tp*i3/360]) //$ph+scaler(10)+$ww+$ch])
               rotate(a=[90,-90,i3])
                 linear_extrude(height=$ww/2, center=true)
-                   circle($tp/4, center=true);
+                  circle(r=$tr, center=true);
            }
 
       // fins
@@ -201,7 +204,7 @@ translate([0,0,$ch+$ph+scaler(10)+$ww-1])
 
     };
 
-    union()
+    /*union()
     {
       color("orange")
         for(i2=[$dy:$dy:$fr+2 * $dy])
@@ -215,6 +218,6 @@ translate([0,0,$ch+$ph+scaler(10)+$ww-1])
         translate([0,0,-1])
           linear_extrude(height=$po+scaler(20))
             circle($hr, center=true);
-    };
+    };*/
   };
 
