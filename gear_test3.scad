@@ -14,9 +14,13 @@ function scaler(n) = n * 0.254 * 1.02;
   // with 1.02 shrink factor
 function anti_scaler(n) = (n / 0.254) / 1.02;
 
+// NOTE:  for 2mm shaft, use 1.95mm for tight gear, 2.05mm for loose gear [like reduction gear free-spin on shaft]
+
 $shd=scaler(9.7)/2; // 0.1" hole diam
 // hole is slightly smaller to fit shaft
 // gear will have to be tapped or pressed on
+// 0.1" is ~2.5mm
+
 $whd=scaler(20)/2; // 0.25" 'wheel' diam
 $gd=scaler(98.46)/2; // 0.969" 'gear' diam
 // NOTE:  based on matching 'tooth side length' with mating gear

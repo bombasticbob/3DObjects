@@ -19,7 +19,7 @@ $shd=scaler(9.7)/2; // 0.1" hole diam
 $whd=scaler(20)/2; // 0.20" 'wheel' diam
 $gd=scaler(25)/2; // 0.25" 'gear' diam
 $whh=scaler(22); // 0.22" 'wheel' height
-$gh=scaler(12);  // 0.12" 'gear' height
+$gh=scaler(20);  // 0.20" 'gear' height
 
 $tc=10; // number of gear teeth
 
