@@ -8,7 +8,8 @@ $mh = 15.8; // 15 mm height + shrinkage
 $ml = 25.0; // 25.0 mm length excluding 'nubs'
 $ml2 = 19.5; // 19.5 mm lengh excluding end cap and shaft guide hole 'nub'
 
-$th = 4.0; // min thickness of plastic around motor
+$th = 4.0; // overall thickness of plastic around motor
+// NOTE:  wall thickness on sides is 1/2 this
 
 // shaft guide hole size
 $sh = 3.1;  // 3.1mm radius
@@ -22,6 +23,12 @@ $gh = 5.5;  // radius of gear hole
 
 // global accuracy parameters
 $fn=32; // number of faces in shape
+
+echo("****************");
+echo("face is ",$mh+$th," by ", $mr * 2 + $th," (mm)");
+
+echo("overall height is ", $ft + $ml2, " (mm)");
+echo("****************");
 
 module face(hh)
 {
