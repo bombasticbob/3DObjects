@@ -16,16 +16,28 @@ If you want the gear to free-spin, increase the hole size by 25 percent or
 so, so that it free-spins but doesn't wobble.
 
 The motor holder is for a particular small motor.  You could include this
-in your own design to mount a motor.  YMMV on size, etc..
+in your own design to mount a motor.  YMMV on size, etc..  And the motor clamp
+is designed to hold the motor in place on the motor holder.
 
-There is one drawing called 'eductor' that is intended to draw a vacuum by
-use of pressurized air, or maybe even steam.  It should get you a pressure
-ratio of about 3:1 (throat to manifold pressure, absolute).  You could have
-multiple stages to get better ratios, but additional stages would need higher
-"moving fluid" flow (i.e. larger nozzle diameter and throat diameter).  This
-is about the largest I could print on my printer, so if I staged them, I'd
-need to make a smaller one for the first stage.  Or, you could make it in
-sections (bolt the horn together at the narrowest point, for example).
+For old style radio fans, there's a 'coil form' that you can adjust to fit
+whatver kind of coil or core you need.  The uploaded version is supposed
+to work with a 10mm core cut to about 25 mm (1 inch).  YMMV on this as well.
+
+(each of these files has adjustable paramters documented in the code so
+that you can customize sizes)
+
+
+There is also a drawing called 'eductor' that is intended to draw a vacuum by
+use of pressurized air, or maybe even steam (except that steam softens the
+plastic to the point where it might melt or collapse).  It should get you a
+pressure ratio of about 3:1 (throat to manifold pressure, absolute).  You
+could have multiple stages to get better ratios, but additional stages would
+need higher "moving fluid" flow (i.e. larger nozzle diameter and throat
+diameter).  This is about the largest I could print on my printer, so if I
+staged them, I'd need to make a smaller one for the first stage.  Or, you
+could make it in sections (bolt the horn together at the narrowest point,
+for example).  Sections might be better if you do a metal fab so you can
+remove any flashing inside the horn.
 
 
 One of them is of very practical use, a water bottle cap, for multi-gallon
