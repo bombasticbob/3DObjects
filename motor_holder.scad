@@ -21,14 +21,10 @@ $pr = 2;  // 2mm appx radius of post
 $sl = 10.0; // length of shaft from flat end of motor
 $gh = 5.5;  // radius of gear hole
 
+
+
 // global accuracy parameters
 $fn=32; // number of faces in shape
-
-echo("****************");
-echo("face is ",$mh+$th," by ", $mr * 2 + $th," (mm)");
-
-echo("overall height is ", $ft + $ml2, " (mm)");
-echo("****************");
 
 module face(hh)
 {
@@ -56,37 +52,38 @@ module face(hh)
   }
 }
 
-
-translate([0,0,$ft])
-  union()
-  {
-    color("green")  
-      face($sw);
-
-    color("yellow")
-      union()
-      {
-        translate([-$mh/2,-$mr,0])
-          linear_extrude(height=$ml2-$sw+1)
-            circle($pr);
-
-        translate([-$mh/2,$mr,0])
-          linear_extrude(height=$ml2-$sw+1)
-            circle($pr);
-
-        translate([$mh/2,-$mr,0])
-          linear_extrude(height=$ml2-$sw+1)
-            circle($pr);
-
-        translate([$mh/2,$mr,0])
-          linear_extrude(height=$ml2-$sw+1)
-            circle($pr);
-      }
-
-    color("blue")
-      translate([0, 0, $ml2-$sw])
+module motor_holder()
+{
+  translate([0,0,$ft])
+    union()
+    {
+      color("green")  
         face($sw);
-  }
+
+      color("yellow")
+        union()
+        {
+          translate([-$mh/2,-$mr,0])
+            linear_extrude(height=$ml2-$sw+1)
+              circle($pr);
+
+          translate([-$mh/2,$mr,0])
+            linear_extrude(height=$ml2-$sw+1)
+              circle($pr);
+
+          translate([$mh/2,-$mr,0])
+            linear_extrude(height=$ml2-$sw+1)
+              circle($pr);
+
+          translate([$mh/2,$mr,0])
+            linear_extrude(height=$ml2-$sw+1)
+              circle($pr);
+        }
+
+      color("blue")
+        translate([0, 0, $ml2-$sw])
+          face($sw);
+    }
 
   color("purple")
     difference()
@@ -98,4 +95,13 @@ translate([0,0,$ft])
         linear_extrude(height=$ft+2)
           circle($gh);
     }
-  
+}
+
+  echo("****************");
+  echo("face is ",$mh+$th," by ", $mr * 2 + $th," (mm)");
+
+  echo("overall height is ", $ft + $ml2, " (mm)");
+  echo("****************");
+
+  motor_holder();
+
