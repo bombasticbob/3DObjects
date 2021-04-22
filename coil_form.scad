@@ -89,6 +89,10 @@ color("orange")
       translate([0,0,-1])
         linear_extrude(height=2*$sl+3)
           circle(d=$sd);
+      
+      translate([0,0,1.6*$sl])
+        linear_extrude(height=0.4*$sl+3)
+          square([$sd*1.5+$th,$sd*0.7], true);
     }
 
 color("red")   // limit of slug motion

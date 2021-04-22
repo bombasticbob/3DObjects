@@ -4,8 +4,9 @@
 //
 // There is no restriction as to how this file can be used
 //
-//     GEAR example - 10 teeth, 0.25 inch diameter
+//     GEAR example - 40 teeth, ~1 inch diameter
 //
+// (this gear is intended to mate with the 'gear_test2.scad' gear)
 
 
 function scaler(n) = n * 0.254 * 1.02;
@@ -13,15 +14,22 @@ function scaler(n) = n * 0.254 * 1.02;
   // with 1.02 shrink factor
 function anti_scaler(n) = (n / 0.254) / 1.02;
 
+// NOTE:  for 2mm shaft, use 1.95mm for tight gear, 2.05mm for loose gear [like reduction gear free-spin on shaft]
+
 $shd=scaler(9.7)/2; // 0.1" hole diam
 // hole is slightly smaller to fit shaft
 // gear will have to be tapped or pressed on
-$whd=scaler(20)/2; // 0.20" 'wheel' diam
-$gd=scaler(25)/2; // 0.25" 'gear' diam
-$whh=scaler(22); // 0.22" 'wheel' height
-$gh=scaler(20);  // 0.20" 'gear' height
+// 0.1" is ~2.5mm
 
-$tc=10; // number of gear teeth
+$whd=scaler(25)/2; // 0.25" gear2 diam
+$gd=scaler(98.46)/2; // 0.969" 'gear' diam
+// NOTE:  based on matching 'tooth side length' with mating gear
+//        see 'echo' lines, below, for that and related info
+$whh=scaler(25); // 0.25" 'wheel' height
+$gh=scaler(8);  // 0.08" 'gear' height
+
+$tc=40; // number of gear teeth
+$tc2=10; // tooth count on smaller gear
 
 // accuracy parameters
 $fn=256; // number of faces in shape
@@ -55,6 +63,10 @@ module tooth(r,h,n,tot) // r=radius,
     // tweek things to match using the
     // gear diameter so that gear teeth
     // will mesh.
+//    echo("gear wheel radius: ", anti_scaler(r));
+//    echo("Tooth side length: ", anti_scaler(ah));
+//    echo("gear radius:  ", anti_scaler(sqrt(cx3*cx3+cy3*cy3)));
+
     echo("gear wheel radius: ", anti_scaler(r) / 100.0, " in ", r / 1.02, " mm");
     echo("Tooth side length: ", anti_scaler(ah) / 100.0, " in ", ah / 1.02, " mm");
     od=sqrt(cx3*cx3+cy3*cy3);
@@ -96,5 +108,11 @@ union()
   {
     translate([0,0,0])
       tooth($gd,$gh,i,$tc);
+  }
+
+  for(i=[0:$tc2-1])
+  {
+    translate([0,0,0])
+      tooth($whd,$whh,i,$tc2);
   }
 }
