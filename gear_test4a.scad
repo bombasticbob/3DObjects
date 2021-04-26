@@ -22,7 +22,7 @@ $shd=scaler(9.7)/2; // 0.1" hole diam
 // 0.1" is ~2.5mm
 
 $whd2=scaler(20)/2; // 0.2" separating wheel diameter
-$whh2=4; // 4mm separates the gears
+$whh2=3; // 4mm separates the gears
 $whd=scaler(25)/2; // 0.25" gear2 diam
 $gd=scaler(98.46)/2; // 0.969" 'gear' diam
 // NOTE:  based on matching 'tooth side length' with mating gear

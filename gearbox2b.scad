@@ -116,16 +116,33 @@ $ww = 30; // width of holder
 $ff = $xd/2+1;  // offset of hole from edge
 $gt = 0.07;     // gear tolerance (mm)
 
+$bs = 5; // 5mm bushing height
+$bd = 3; // 6mm bushing diameter
 //rotate(a=[0,0,0])
 //  motor_holder();
 
 color("orange")
   difference()
   {
-    translate([$mp,0,0])
-      linear_extrude(height=$ft)
-        square([$ll,$ww],true);
+    union()
+    {
+      translate([$mp,0,0])
+        linear_extrude(height=$ft)
+          square([$ll,$ww],true);
 
+      // bushings - need to be large, otherwise hole melts
+      translate([3.175+14.1652+$gt, 0, 0])
+        linear_extrude(height=$ft+$bs)
+          circle($bd);
+    
+      translate([2*(3.175+14.1652+$gt), 0, 0])
+        linear_extrude(height=$ft+$bs)
+          circle($bd);
+
+      translate([3*(3.175+14.1652+$gt), 0, 0])
+        linear_extrude(height=$ft+$bs)
+          circle($bd);
+    }
 //    translate([0,0,-1])
 //      linear_extrude(height=$ft+2)
 //        circle($gh);
@@ -141,15 +158,15 @@ color("orange")
   // gear radius: 0.557684 in 14.1652 mm
 
     translate([3.175+14.1652+$gt, 0,-1])
-      linear_extrude(height=$ft+2)
+      linear_extrude(height=$ft+$bs+2)
         circle($sd2);
     
     translate([2*(3.175+14.1652+$gt), 0,-1])
-      linear_extrude(height=$ft+2)
+      linear_extrude(height=$ft+$bs+2)
         circle($sd2);
 
     translate([3*(3.175+14.1652+$gt), 0,-1])
-      linear_extrude(height=$ft+2)
+      linear_extrude(height=$ft+$bs+2)
         circle($sd2);
 
     dx=$ll/2-$ff;

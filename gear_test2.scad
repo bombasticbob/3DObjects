@@ -13,13 +13,18 @@ function scaler(n) = n * 0.254 * 1.02;
   // with 1.02 shrink factor
 function anti_scaler(n) = (n / 0.254) / 1.02;
 
-$shd=scaler(9.7)/2; // 0.1" hole diam
-// hole is slightly smaller to fit shaft
+$shd=scaler(9.7)/2; // ~0.1" hole diam (0.097)
+// hole is slightly smaller to fit shaft; any
+// smaller and shaft deforms, usually lopsided.
 // gear will have to be tapped or pressed on
-$whd=scaler(20)/2; // 0.20" 'wheel' diam
+// NOTE:  torque will be applied to shaft
+//        so larger 'wheel' diam
+//        and use 100% fill
+$whd=scaler(25)/2; // 0.20" 'wheel' diam
 $gd=scaler(25)/2; // 0.25" 'gear' diam
-$whh=scaler(22); // 0.22" 'wheel' height
 $gh=scaler(20);  // 0.20" 'gear' height
+//$whh=scaler(30); // 0.3" 'wheel' height
+$whh=scaler(20)+3; // 0.2" + 3mm 'wheel' height
 
 $tc=10; // number of gear teeth
 
@@ -79,6 +84,14 @@ union()
       translate([0,0,-1])
         linear_extrude(height=$whh+2)
           circle($shd, center=true);
+
+      // slight bevel for inserting shaft, 0.5mm
+      for(i=[0:0.025:0.6])
+      {
+        translate([0,0,$whh-0.5+i])
+          linear_extrude(height=0.11)
+            circle($shd+i*i,center=true);
+      }
     }
 
   color("green")
