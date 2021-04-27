@@ -18,7 +18,9 @@ $ft = 1;  // 1mm approximate thickness of face
 $pr = 2;  // 2mm appx radius of post
 
 $sd1 = 0.97 * 2.54 * 1.02 / 2; // shaft radius
-$sd2 = 1.01 * 2.54 * 1.02 / 2; // loose shaft radius
+$sd2 = 1.07 * 2.54 * 1.02 / 2; // loose shaft radius - physical hole size will be smaller
+
+echo("Shaft radius: ", $sd2, " vs ", $sd1);
 
 // motor shaft extension length
 $sl = 10.0; // length of shaft from flat end of motor
@@ -43,6 +45,21 @@ module face(hh,bb=0)
       translate([0,0,-1])
         linear_extrude(height=hh+2)
           polygon(points=[[-$mh/2,-mrr],[$mh/2,-mrr],[$mh/2,mrr],[-$mh/2,mrr]]);
+
+      
+      translate([$mh/2+$th/2-$pr/4,mrr+$th/2-$pr/4,-1])
+        linear_extrude(height=hh+2)
+          square([$pr,$pr],true);
+
+      translate([-($mh/2+$th/2-$pr/4),mrr+$th/2-$pr/4,-1])
+        linear_extrude(height=hh+2)
+          square([$pr,$pr],true);
+      translate([$mh/2+$th/2-$pr/4,-(mrr+$th/2-$pr/4),-1])
+        linear_extrude(height=hh+2)
+          square([$pr,$pr],true);
+      translate([-($mh/2+$th/2-$pr/4),-(mrr+$th/2-$pr/4),-1])
+        linear_extrude(height=hh+2)
+          square([$pr,$pr],true);
     }
 
     difference()
@@ -69,19 +86,19 @@ module motor_holder()
         union()
         {
           translate([-$mh/2,-$mr,0])
-            linear_extrude(height=$ml2-$sw+1)
+            linear_extrude(height=$ml2-$sw+$ft*2)
               circle($pr);
 
           translate([-$mh/2,$mr,0])
-            linear_extrude(height=$ml2-$sw+1)
+            linear_extrude(height=$ml2-$sw+$ft*2)
               circle($pr);
 
           translate([$mh/2,-$mr,0])
-            linear_extrude(height=$ml2-$sw+1)
+            linear_extrude(height=$ml2-$sw+$ft*2)
               circle($pr);
 
           translate([$mh/2,$mr,0])
-            linear_extrude(height=$ml2-$sw+1)
+            linear_extrude(height=$ml2-$sw+$ft*2)
               circle($pr);
         }
 
@@ -110,8 +127,8 @@ module motor_holder()
 
 $xd = 25.4 / 8 + 0.3; // screw holes
 
-$mp = 25; // motor position (offset)
-$ll = 84; // length of holder
+$mp = 27.5; // motor position (offset)
+$ll = 85; // length of holder
 $ww = 30; // width of holder
 $ff = $xd/2+1;  // offset of hole from edge
 $gt = 0.07;     // gear tolerance (mm)

@@ -21,7 +21,7 @@ $shd=scaler(9.7)/2; // 0.1" hole diam
 // gear will have to be tapped or pressed on
 // 0.1" is ~2.5mm
 
-$whd=scaler(20)/2; // 0.25" 'wheel' diam
+$whd=scaler(22)/2; // 0.22" 'wheel' diam
 $gd=scaler(98.46)/2; // 0.969" 'gear' diam
 // NOTE:  based on matching 'tooth side length' with mating gear
 //        see 'echo' lines, below, for that and related info
@@ -62,9 +62,9 @@ module tooth(r,h,n,tot) // r=radius,
     // tweek things to match using the
     // gear diameter so that gear teeth
     // will mesh.
-    echo("gear wheel radius: ", anti_scaler(r));
+    echo("gear wheel radius: ", anti_scaler(r)/100, "in");
     echo("Tooth side length: ", anti_scaler(ah));
-    echo("gear radius:  ", anti_scaler(sqrt(cx3*cx3+cy3*cy3)));
+    echo("gear radius:  ", anti_scaler(sqrt(cx3*cx3+cy3*cy3))/100, "in, ", anti_scaler(sqrt(cx3*cx3+cy3*cy3)) * 0.254, "mm");
   }
 
   color("blue")

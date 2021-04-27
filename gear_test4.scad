@@ -22,10 +22,12 @@ $shd=scaler(9.7)/2; // 0.1" hole diam
 // 0.1" is ~2.5mm
 
 $whd=scaler(25)/2; // 0.25" gear2 diam
+$whd2=scaler(22)/2; // 0.22" spacer diam
 $gd=scaler(98.46)/2; // 0.969" 'gear' diam
 // NOTE:  based on matching 'tooth side length' with mating gear
 //        see 'echo' lines, below, for that and related info
 $whh=scaler(25); // 0.25" 'wheel' height
+$whh2=scaler(50) - 4; // 0.5" - 4mm 'wheel' height
 $gh=scaler(8);  // 0.08" 'gear' height
 
 $tc=40; // number of gear teeth
@@ -85,11 +87,17 @@ union()
   color("red")
     difference()
     {
-      translate([0,0,0])
-        linear_extrude(height=$whh)
-          circle($whd, center=true);
+      union()
+      {
+        translate([0,0,0])
+          linear_extrude(height=$whh)
+            circle($whd, center=true);
+        translate([0,0,0])
+          linear_extrude(height=$whh2)
+            circle($whd2, center=true);
+      }
       translate([0,0,-1])
-        linear_extrude(height=$whh+2)
+        linear_extrude(height=$whh2+2)
           circle($shd, center=true);
     }
 
