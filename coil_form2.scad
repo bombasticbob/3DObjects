@@ -3,9 +3,9 @@
 // (inductance to be determined)
 //
 
-$sd = 3.2; // 2.8mm slug diameter plus clearance
+$sd = 4.2; // 2.8mm slug diameter plus clearance for screw and cap
 $sl = 25.4; // 25.4mm (1 inch) slug length
-$th = 2;    // 2mm wall thickness
+$th = 1.5;  // 1.5mm wall thickness
 $bh = 4;    // 4mm base height
 
 $nn = 25.4 / 16; // 1/16 inch notches

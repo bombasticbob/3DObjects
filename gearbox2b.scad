@@ -15,6 +15,7 @@ $th = 4.0; // overall thickness of plastic around motor
 $sh = 3.1;  // 3.1mm radius
 $sw = 2;  // 2mm approximate height of guide
 $ft = 1;  // 1mm approximate thickness of face
+$pt = 2;  // thickness of panel
 $pr = 2;  // 2mm appx radius of post
 
 $sd1 = 0.97 * 2.54 * 1.02 / 2; // shaft radius
@@ -31,7 +32,7 @@ $gh = 5.5;  // radius of gear hole
 // global accuracy parameters
 $fn=32; // number of faces in shape
 
-module face(hh,bb=0)
+module face(hh,bb=0)  // bb is the size of the bottom hole relative to the top hole
 {
   mrr = $mr + bb;  
     
@@ -50,7 +51,6 @@ module face(hh,bb=0)
       translate([$mh/2+$th/2-$pr/4,mrr+$th/2-$pr/4,-1])
         linear_extrude(height=hh+2)
           square([$pr,$pr],true);
-
       translate([-($mh/2+$th/2-$pr/4),mrr+$th/2-$pr/4,-1])
         linear_extrude(height=hh+2)
           square([$pr,$pr],true);
@@ -71,6 +71,31 @@ module face(hh,bb=0)
         linear_extrude(height=hh+2)
           circle(mrr);
     }
+  }
+}
+
+// this creates a bounding rectangle about the inner
+// portion of the face, suitable for a cutaway
+module face_boundary(hh,bb=0)  // bb is the size of the bottom hole relative to the top hole
+{
+  mrr = $mr + bb;  
+  difference()
+  {
+      linear_extrude(height=hh)
+        square([$mh + $th/2, mrr * 2 + $th/2], true);
+
+      translate([$mh/2+$th/2-$pr/4,mrr+$th/2-$pr/4,-1])
+        linear_extrude(height=hh+2)
+          square([$pr,$pr],true);
+      translate([-($mh/2+$th/2-$pr/4),mrr+$th/2-$pr/4,-1])
+        linear_extrude(height=hh+2)
+          square([$pr,$pr],true);
+      translate([$mh/2+$th/2-$pr/4,-(mrr+$th/2-$pr/4),-1])
+        linear_extrude(height=hh+2)
+          square([$pr,$pr],true);
+      translate([-($mh/2+$th/2-$pr/4),-(mrr+$th/2-$pr/4),-1])
+        linear_extrude(height=hh+2)
+          square([$pr,$pr],true);
   }
 }
 
@@ -127,11 +152,11 @@ module motor_holder()
 
 $xd = 25.4 / 8 + 0.3; // screw holes
 
-$mp = 27.5; // motor position (offset)
+$mp = 27; // motor position (offset)
 $ll = 85; // length of holder
 $ww = 30; // width of holder
-$ff = $xd/2+1;  // offset of hole from edge
-$gt = 0.07;     // gear tolerance (mm)
+$ff = $xd/2+1.5;  // offset of hole from edge (appx 1/8" hole, appx 1/16" plastic around it)
+$gt = 0.15;     // gear tolerance (mm)
 
 $bs = 5; // 5mm bushing height
 $bd = 3; // 6mm bushing diameter
@@ -144,9 +169,15 @@ color("orange")
   {
     union()
     {
-      translate([$mp,0,0])
-        linear_extrude(height=$ft)
-          square([$ll,$ww],true);
+//      difference()
+//      {
+        translate([$mp,0,0])
+          linear_extrude(height=$pt)
+            square([$ll,$ww],true);
+
+//        translate([0,0,$ft])
+//          face_boundary($sw,-0.3);
+//      }
 
       // bushings - need to be large, otherwise hole melts
       translate([3.175+14.1652+$gt, 0, 0])
@@ -163,7 +194,7 @@ color("orange")
     }
 
 //    translate([0,0,-1])
-//      linear_extrude(height=$ft+2)
+//      linear_extrude(height=$sw+2)
 //        circle($gh);
 
   // from gear_test2
@@ -192,16 +223,16 @@ color("orange")
     dy=$ww/2-$ff;
 
     translate([$mp-dx,-dy,-1])
-      linear_extrude(height=$ft+2)
+      linear_extrude(height=$pt+2)
         circle(d=$xd);
     translate([$mp-dx,dy,-1])
-      linear_extrude(height=$ft+2)
+      linear_extrude(height=$pt+2)
         circle(d=$xd);
     translate([$mp+dx,-dy,-1])
-      linear_extrude(height=$ft+2)
+      linear_extrude(height=$pt+2)
         circle(d=$xd);
     translate([$mp+dx,dy,-1])
-      linear_extrude(height=$ft+2)
+      linear_extrude(height=$pt+2)
         circle(d=$xd);
   }
   

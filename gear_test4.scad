@@ -26,9 +26,9 @@ $whd2=scaler(22)/2; // 0.22" spacer diam
 $gd=scaler(98.46)/2; // 0.969" 'gear' diam
 // NOTE:  based on matching 'tooth side length' with mating gear
 //        see 'echo' lines, below, for that and related info
-$whh=scaler(25); // 0.25" 'wheel' height
-$whh2=scaler(50) - 5.25; // 0.5" - 5mm 'wheel' height
-// NOTE:  use 5mm spacer below gear
+$whh=scaler(35); // 0.35" 'wheel' height
+$whh2=scaler(50) - 3.25; // 0.5" - 5mm 'wheel' height
+// NOTE:  use 3mm spacer below gear
 $gh=scaler(8);  // 0.08" 'gear' height
 
 $tc=40; // number of gear teeth
