@@ -22,12 +22,13 @@ $shd=scaler(9.7)/2; // 0.1" hole diam
 // 0.1" is ~2.5mm
 
 $whd2=scaler(20)/2; // 0.2" separating wheel diameter
-$whh2=4; // 4mm separates the gears
+$whh2=6.5; // 6.5mm separates the gears
 $whd=scaler(25)/2; // 0.25" gear2 diam
 $gd=scaler(98.46)/2; // 0.969" 'gear' diam
 // NOTE:  based on matching 'tooth side length' with mating gear
 //        see 'echo' lines, below, for that and related info
-$whh=scaler(25) + $whh2 - 1; // 0.25" 'wheel' height plus space between gears minus a mm [to match other gears]
+//$whh=scaler(25) + $whh2 - 1; // 0.25" 'wheel' height plus space between gears minus a mm [to match other gears]
+$whh=scaler(50) - 3; // half an inch minus 3mm
 $gh=scaler(8);  // 0.08" 'gear' height
 
 $tc=40; // number of gear teeth
@@ -81,6 +82,7 @@ module tooth(r,h,n,tot) // r=radius,
 
 }
 
+//translate([10,0,0])
 union()
 {
 
@@ -127,6 +129,6 @@ union()
     for(i=[0:$tc2-1])
     {
       translate([0,0,0])
-        tooth($whd,$whh-$whh2-1,i,$tc2);
+        tooth($whd,$whh-$whh2-0.5,i,$tc2);
     }
 }
