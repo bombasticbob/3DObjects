@@ -3,7 +3,7 @@
 // (inductance to be determined)
 //
 
-$sd = 4.9; // 3.2mm slug diameter plus clearance for coupling
+$sd = 5.3; // 3.2mm slug diameter plus clearance for coupling
 $sl = 14;   // 14mm (9/16+ inch) slug length
 $th = 1;    // 1mm wall thickness
 $th2 = 1.5; // 2mm wire tie thickness
@@ -191,7 +191,7 @@ module threads()
 
 module coupling()
 {
-  to=3.9/2;//25.4/16+0.2; // about 1/8"
+  to=3.8/2;//25.4/16+0.2; // about 1/8"
   ch0=25.4/10;  // 1/10" height of threaded part
   ch=25.4*3/16; // 3/16" height (overall)
 
@@ -204,7 +204,7 @@ module coupling()
     difference()
     {
       linear_extrude(ch)
-        circle(to+0.4); // 0.4 wall thickness, 4.7mm total
+        circle(to+0.6); // 0.6 wall thickness, 5.1mm total
 
       translate([0,0,-1])
         linear_extrude(ch+2)
