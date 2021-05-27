@@ -3,9 +3,10 @@
 // (inductance to be determined)
 //
 
-$sd = 4.2; // 2.8mm slug diameter plus clearance for screw and cap
-$sl = 25.4; // 25.4mm (1 inch) slug length
-$th = 1.5;  // 1.5mm wall thickness
+$sd = 4.9; // 3.2mm slug diameter plus clearance for coupling
+$sl = 14;   // 14mm (9/16+ inch) slug length
+$th = 1;    // 1mm wall thickness
+$th2 = 1.5; // 2mm wire tie thickness
 $bh = 4;    // 4mm base height
 
 $nn = 25.4 / 16; // 1/16 inch notches
@@ -20,9 +21,12 @@ $xw = 25.4 / 4; // width of adjust thingy
 $xl = 25.4 / 4; // length of adjust thingy
 $xh = 2;        // thickness of adjust thingy
 
+zz=1; // zero to only print coupling
 
 $fn=32; // num frames in shape (global)
 
+if(zz)
+{
 color("red") // base
   difference()
   {
@@ -87,11 +91,11 @@ color("red")   // limit of slug motion
   translate([0,0,$sl+$bh])
     difference()
     {
-      linear_extrude(height=$th)
+      linear_extrude(height=$th2)
         circle(d=$bw+$th+$nn);
 
       translate([0,0,-1])
-        linear_extrude(height=$th+2)
+        linear_extrude(height=$th2+2)
           circle(d=$sd);
 
       for(ww=[0:30:359])
@@ -141,5 +145,84 @@ color("green")   // yoke/canopy thingy for adjustments
               square([$sd*1.5+$th,$sd*0.7], true);
         }
     }
+} // zz
     
-    
+module threads()
+{
+  difference()
+  {
+    to=25.4/16+0.2;  // about 1/8"
+    ww=25.4/16;      // wall width 1/16"
+    bt=0; // 2mm bottom thickness
+    ch=25.4/8;  // 1/8" height
+    tp=25.4/40;   // thread pitch 1/40"  4-40
+    tb=25.4 * 0.04;  // .04" gap from top
+    // max diameter 0.1112. 0.0950
+    td=25.4 * 0.008; // thread depth 0.008"
+    aa=360*4; // total angular thread motion
+    dy=0.1; // delta Y for loops
+    ii=6; // 6 degrees iteration on thread
+
+    // threads for 4-40
+
+    color("yellow")
+         for(i3=[0:ii:aa])
+         {
+           translate([cos(i3)*to,sin(i3)*to,bt+ch - tb - td - (tp*aa/360) + (tp*i3/360)]) //$ph+scaler(10)+$ww+$ch])
+            rotate(a=[90,-90,i3])
+              linear_extrude(height=ww*2)
+                 //circle($td, center=true);
+                 polygon(points=[[-td,0.254], [td,-0.254], [0,1.5*td]]); // equilateral triangle
+         }
+
+      difference() // cylinder that is the outer limit of threads
+      {
+        translate([0,0,bt-1]) // just below position of threads
+          linear_extrude(height=ch)
+            circle(to+ww+1); // way outside
+
+        translate([0,0,bt]) 
+          linear_extrude(height=ch+2)
+            circle(to+0.4); // actual outer limit
+      };
+
+  }
+}
+
+module coupling()
+{
+  to=3.9/2;//25.4/16+0.2; // about 1/8"
+  ch0=25.4/10;  // 1/10" height of threaded part
+  ch=25.4*3/16; // 3/16" height (overall)
+
+  union()
+  {
+    threads();
+  }
+
+  color("blue")
+    difference()
+    {
+      linear_extrude(ch)
+        circle(to+0.4); // 0.4 wall thickness, 4.7mm total
+
+      translate([0,0,-1])
+        linear_extrude(ch+2)
+          circle(to);
+
+      translate([-(ch0+1),0,ch0+ch/2])
+      {
+        rotate([90,0,90])
+          linear_extrude(height=ch+2)
+            square([1,ch],center=true);
+      }
+    }
+
+}
+
+if(zz)
+  translate([0,0,2*$sl+$bh+$xc])
+    threads();
+
+translate([20,0,0])
+  coupling();

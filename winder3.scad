@@ -9,7 +9,7 @@ $wt = 1;      // 1mm thickness of wheel
 $wd = 60;     // 70mm diameter
 
 $dd = 25.4/8+0.2;  // 1/8 inch diameter hole
-$dh = 25.4/4;  // 1/2" bracket
+$dh = $dd * 2;//25.4/4+0.5;  // 1/4" bracket
 //$of = $dd+$wt; // offset from edge
 
 $fn = 64;     // 64 faces on shapes
@@ -46,8 +46,8 @@ union()
                 circle(d=$wd/2+$sd/2-$wt*2);
             }
 
-            linear_extrude(height=$wt+0.2)
-              circle(d=($sd+$th));
+//            linear_extrude(height=$wt+0.2)
+//              circle(d=($sd+$th));
 
             for(ii=[0:45:359])
             {
@@ -58,9 +58,16 @@ union()
           }
 
           color("green")
-            translate([0,0,$wt*2])
-              linear_extrude(height=$wt+0.1)
-                circle(d=($wd/2+$sd/2));
+            difference()
+            {
+              translate([0,0,$wt*2])
+                linear_extrude(height=$wt+0.1)
+                  circle(d=($wd/2+$sd/2));
+
+              translate([0,0,$wt-0.1])
+                linear_extrude(height=$wt*2+1.2)
+                  square([$wd/2,$dd],true);
+            }
 
           color("purple")
             translate([$wd/4+$sd/4-$th/2,
@@ -70,10 +77,11 @@ union()
                 linear_extrude(height=$dh)
                   square([$th,$dd*2], true);
 
-                translate([-1,0,$dh/2])
+//                translate([-1,0,$dh/2])
+                translate([-2,0,$dh-$dd/2-$th/2])
                   rotate([0,90,0])
                     linear_extrude(height=
-                                   $th*2+1)
+                                   $th*2+2)
                       circle(d=$dd);
               }
 
@@ -85,25 +93,24 @@ union()
                 linear_extrude(height=$dh)
                   square([$th,$dd*2], true);
 
-                translate([-1,0,$dh/2])
+                translate([-2,0,$dh-$dd/2-$th/2])
                   rotate([0,90,0])
                     linear_extrude(height=
-                                   $th*2+1)
+                                   $th*2+2)
                       circle(d=$dd);
               }
     }
 
     color("yellow")
         translate([0,0,-1])
-          linear_extrude(height=$wt*2+1)
+          linear_extrude(height=$wt*2+1.1)
             circle(d=($sd));
 
-  }
-
+}
   color("red")
     translate([0,0,0])
       linear_extrude(height=$th)
-        square([$th-0.1,$sd+0.1],true);
+        square([$sd+0.1,$th-0.1],true);
 
 }
 
