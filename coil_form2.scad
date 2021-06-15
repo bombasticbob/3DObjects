@@ -191,9 +191,12 @@ module threads()
 
 module coupling()
 {
+// note filament is 0.4, need to set min thick to that.
   to=3.8/2;//25.4/16+0.2; // about 1/8"
   ch0=25.4/10;  // 1/10" height of threaded part
-  ch=25.4*3/16; // 3/16" height (overall)
+  ch=25.4/4; // 1/4" height (overall)
+  wt=0.6; // 1.5 times filament size
+  wd=0.2; // diameter shrink on hole (drill out)
 
   union()
   {
@@ -204,11 +207,15 @@ module coupling()
     difference()
     {
       linear_extrude(ch)
-        circle(to+0.6); // 0.6 wall thickness, 5.1mm total
+        circle(to+wt); // add wall thickness
 
       translate([0,0,-1])
-        linear_extrude(ch+2)
+        linear_extrude(ch0+2)
           circle(to);
+
+      translate([0,0,ch0-1])
+        linear_extrude(ch+2-ch0)
+          circle(to-wd);
 
       translate([-(ch0+1),0,ch0+ch/2])
       {
@@ -223,6 +230,9 @@ module coupling()
 if(zz)
   translate([0,0,2*$sl+$bh+$xc])
     threads();
+
+translate([-20,0,0])
+  coupling();
 
 translate([20,0,0])
   coupling();
