@@ -14,7 +14,9 @@ $dh = $dd * 2;//25.4/4+0.5;  // 1/4" bracket
 
 $fn = 64;     // 64 faces on shapes
 
-union()
+zzz = 1; // 0 to only print caps and clamps
+
+if(zzz != 0) union()
 {
   difference()
   {
@@ -118,14 +120,15 @@ module end_cap()
 {
   union()
   {
-    to=25.4/16+0.2;  // about 1/8"
-    ww=25.4/16;      // wall width 1/2"
+    to=25.4/16+0.2;  // about 1/8" diameter (as radius)
+    dia=25.4/4;      // 1/4" outer diameter
+    ww=dia/2-to;    // wall width ~3/64"
     bt=2; // 2mm bottom thickness
     ch=25.4/8;  // 1/8" height
     tp=25.4/40;   // thread pitch 1/40"  4-40
     tb=25.4 * 0.04;  // .04" gap from top
     // max diameter 0.1112. 0.0950
-    td=25.4 * 0.008; // thread depth 0.008"
+    td=25.4 * 0.010; // thread depth 0.010" (was 0.008")
     aa=360*4; // total angular thread motion
     dy=0.1; // delta Y for loops
     ii=6; // 6 degrees iteration on thread
@@ -135,11 +138,11 @@ module end_cap()
       {
         translate([0,0,bt-1]) // position of bottle cap ring
           linear_extrude(height=ch)
-            circle(to+ww, center=true);
+            circle(to+ww);
 
         translate([0,0,bt]) // position of bottle cap ring
           linear_extrude(height=ch+1)
-            circle(to, center=true);
+            circle(to);
       };
 
     // threads on bottle cap - a bit hackish but it works
@@ -157,8 +160,84 @@ module end_cap()
   }
 }
 
-translate([-35,-10,0])
-  end_cap();
-translate([-35,10,0])
-  end_cap();
+module clamp()
+{
+  // from end_cap()
+  to=25.4/8+0.2;  // about 1/8" with some slop
+  dia=25.4/4;     // 1/4" diameter
+  bt=2;           // 2mm bottom thickness
+  ch=25.4/8       // 1/8" height of threaded cap
+    +0.4;         // plus some extra
 
+  ww=25.4/2; // 1/2" wide
+  hh=3.5;    // 3.5mm height
+  th=1.0;    // 1mm thick
+
+  union() translate([0,-ww/2,0])
+  {
+    color("green")
+    {
+      difference()
+      {
+        translate([0,0,0])
+          linear_extrude(height=th)
+            square([ch, ww],false);
+
+        hz=dia*3/4;
+
+        translate([0,ww/2-hz/2,-1])
+          linear_extrude(height=th+2)
+            square([ch, hz]);
+      }
+    
+      translate([0,ww/2+dia/2+0.1,0])
+        linear_extrude(height=hh+th)
+          square([ch, th]);
+      translate([0,ww/2-th-dia/2-0.1,0])
+        linear_extrude(height=hh+th)
+          square([ch, th]);
+
+      translate([-th,0,0])
+        linear_extrude(height=hh+0.1)
+          square([th, ww]);
+
+      translate([-hh,0,hh])
+        linear_extrude(height=th)
+          square([hh, ww]);
+
+      difference()
+      {
+        translate([ch,0,0])
+          linear_extrude(height=hh+0.1+th)
+            square([th, ww]);
+
+        translate([ch-0.1,ww/2-to/2,th])
+          linear_extrude(height=hh+th+0.1)
+            square([th+0.2, to]);
+      }
+    }
+  }
+
+}
+
+module thingies(zzzz)
+{
+  xxx=(zzzz != 0) ? 20 : 10;
+  yyy=(zzzz != 0) ? 30 : 10;
+  rrr=(zzzz != 0) ? 36 : 0;
+
+  translate([-yyy,-xxx,0])
+    end_cap();
+  translate([-yyy,xxx,0])
+    end_cap();
+
+  translate([yyy,xxx,0])
+    rotate(a=[0,0,rrr])
+      clamp();
+  translate([yyy,-xxx,0])
+    rotate(a=[0,0,-rrr])
+      clamp();
+}
+
+
+thingies(zzz);
